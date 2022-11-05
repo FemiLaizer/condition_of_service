@@ -1,5 +1,6 @@
 let btn = document.querySelector("button");
 let final_figure = document.querySelector("#total");
+let error_message = document.querySelector("#error-message");
 let input = document.querySelectorAll("input");
 let basic = document.getElementById('basic');
 let housing = document.getElementById('housing');
@@ -33,8 +34,17 @@ const calculateSalaries = (salary) => {
     dressing_annual = (((salary[4] * 12) * 0.1) * 0.65);
 
     const total = basic_annual + housing_annual + transport_annual + utility_annual + dressing_annual;
+    if (total !== NaN && total > 1) {
+        final_figure.innerHTML = `N${total.toFixed(2)}`
+        error_message.innerHTML = ""
+    } else {
+        final_figure.innerHTML = ""
+        error_message.innerHTML = "You entered incorrect figures! Please try again."
+        setTimeout(() => {
+            error_message.innerHTML = ""
+        }, 2000);
+    }
 
-    final_figure.innerHTML = total.toFixed(2)
     clearAllInput()
 }
 
@@ -56,3 +66,4 @@ input.forEach(eachItem => {
         }
     });
 })
+
